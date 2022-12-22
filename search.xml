@@ -11,6 +11,12 @@
         <content type="html"><![CDATA[<h1 id="这是第一篇文章"><a href="#这是第一篇文章" class="headerlink" title="这是第一篇文章"></a>这是第一篇文章</h1>]]></content>
       
       
+      <categories>
+          
+          <category> 第一篇文章 </category>
+          
+      </categories>
+      
       
         <tags>
             
