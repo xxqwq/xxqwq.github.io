@@ -1,0 +1,456 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>哈希表 | LX's Blog</title><meta name="author" content="Lx"><meta name="copyright" content="Lx"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Day 9 Leetcode 242 有效的字母异位词题目 1234567891011121314151617181920&#x2F;** * @param &amp;#123;string&amp;#125; s * @param &amp;#123;string&amp;#125; t * @return &amp;#123;boolean&amp;#125; *&#x2F;var isAnagram &#x3D; function (s, t) &amp;#123;    i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="哈希表">
+<meta property="og:url" content="http://www.coderlx.cn/2023/01/14/2023.01.13%E5%93%88%E5%B8%8C%E8%A1%A8/index.html">
+<meta property="og:site_name" content="LX&#39;s Blog">
+<meta property="og:description" content="Day 9 Leetcode 242 有效的字母异位词题目 1234567891011121314151617181920&#x2F;** * @param &amp;#123;string&amp;#125; s * @param &amp;#123;string&amp;#125; t * @return &amp;#123;boolean&amp;#125; *&#x2F;var isAnagram &#x3D; function (s, t) &amp;#123;    i">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://bu.dusays.com/2022/05/29/62939662553c9.png">
+<meta property="article:published_time" content="2023-01-14T11:36:00.000Z">
+<meta property="article:modified_time" content="2023-01-14T11:36:00.000Z">
+<meta property="article:author" content="Lx">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="代码">
+<meta property="article:tag" content="哈希表">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://bu.dusays.com/2022/05/29/62939662553c9.png"><link rel="shortcut icon" href="/img/favicon1.ico"><link rel="canonical" href="http://www.coderlx.cn/2023/01/14/2023.01.13%E5%93%88%E5%B8%8C%E8%A1%A8/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: {"appId":"50JQOT66OW","apiKey":"31dd4294fc1929bcfa2f3ee08419e0c3","indexName":"blog","hits":{"per_page":10},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '哈希表',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2023-01-14 19:36:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/lantern.css"><div class="dengl"><div class="d-box"><div class="d1"><span></span><span><p></p></span><ul><li></li><li> </li><li><span></span></li><li> </li><li> </li></ul></div><div class="d2"><span></span><span><p></p></span><ul><li></li><li> </li><li><span></span></li><li> </li><li> </li></ul></div></div><div class="d-box1"><div class="d1"><span></span><span><p></p></span><ul><li></li><li> </li><li><span></span></li><li> </li><li> </li></ul></div><div class="d2"><span></span><span><p></p></span><ul><li></li><li> </li><li><span></span></li><li> </li><li>  </li></ul></div></div></div><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/index.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://bu.dusays.com/2022/05/29/62939662553c9.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">LX's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">哈希表</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-14T11:36:00.000Z" title="发表于 2023-01-14 19:36:00">2023-01-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-14T11:36:00.000Z" title="更新于 2023-01-14 19:36:00">2023-01-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/">刷题记录</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="哈希表"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Day-9-Leetcode-242-有效的字母异位词"><a href="#Day-9-Leetcode-242-有效的字母异位词" class="headerlink" title="Day 9 Leetcode 242 有效的字母异位词"></a>Day 9 Leetcode 242 有效的字母异位词</h1><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/valid-anagram/">题目</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">string</span>&#125; <span class="variable">s</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">string</span>&#125; <span class="variable">t</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">boolean</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> isAnagram = <span class="keyword">function</span> (<span class="params">s, t</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (s.<span class="property">length</span> !== t.<span class="property">length</span>) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    <span class="keyword">const</span> record = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">26</span>).<span class="title function_">fill</span>(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">const</span> a=<span class="string">&#x27;a&#x27;</span>.<span class="title function_">charCodeAt</span>()</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; s.<span class="property">length</span>; i++) &#123;</span><br><span class="line">        record[s[i].<span class="title function_">charCodeAt</span>() - a]++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; t.<span class="property">length</span>; i++) &#123;</span><br><span class="line">        record[t[i].<span class="title function_">charCodeAt</span>() - a]--;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (record[i] !== <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>解法：</p>
+<ul>
+<li>本题用哈希法进行解题，思路就是用一个数组来记录每个字母重复的次数</li>
+<li>先遍历第一个字符串，遇到字符就在record数组中对应的位置加一记录下</li>
+<li>之后遍历第二个，遇到字符后再record数组中对应的位置减一来记录</li>
+<li>最后遍历record，如果出现不为0的位置证明两个字符串所含字母不一定相同</li>
+<li>注意：js里获取字符串的ascii码必须要用charCodeAt（）方法</li>
+</ul>
+</li>
+</ul>
+<h2 id="Day-10-Leetcode-349-两个数组的交集"><a href="#Day-10-Leetcode-349-两个数组的交集" class="headerlink" title="Day 10 Leetcode 349 两个数组的交集"></a>Day 10 Leetcode 349 两个数组的交集</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/intersection-of-two-arrays/submissions/">题目</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums1</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums2</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number[]</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> intersection = <span class="keyword">function</span>(<span class="params">nums1, nums2</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(nums1.<span class="property">length</span>&lt;nums2.<span class="property">length</span>)&#123;</span><br><span class="line">        <span class="keyword">let</span> t=nums1</span><br><span class="line">        nums1=nums2</span><br><span class="line">        nums2=t</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> hash=<span class="keyword">new</span> <span class="title class_">Set</span>(nums1)</span><br><span class="line">    <span class="keyword">const</span> res=<span class="keyword">new</span> <span class="title class_">Set</span>()</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;nums2.<span class="property">length</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(hash.<span class="title function_">has</span>(nums2[i]))&#123;</span><br><span class="line">            res.<span class="title function_">add</span>(nums2[i])</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Array</span>.<span class="title function_">from</span>(res)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>解法：</p>
+<ul>
+<li>这道题主要要注意返回的是一个不含重复数字的数组，因此可以使用set来保证没有重复，最后转换成数组就可以了</li>
+<li>先找到比较大的那个数组，然后让这个数组转成hash表（set结构）这样的话只需要用另一个数组中的元素来和这个hash表来判断有没有重复就可以了，有重复就加到res这个表中</li>
+<li>注意：只有当数值比较小的时候才能用数组做哈希表</li>
+</ul>
+</li>
+</ul>
+<h1 id="Day-10-Leetcode-202-快乐数"><a href="#Day-10-Leetcode-202-快乐数" class="headerlink" title="Day 10 Leetcode  202 快乐数"></a>Day 10 Leetcode  202 快乐数</h1><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/happy-number/">题目</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">n</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">boolean</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> getSum = <span class="keyword">function</span> (<span class="params">num</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> sum = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> (num) &#123;</span><br><span class="line">        sum += (num % <span class="number">10</span>) ** <span class="number">2</span></span><br><span class="line">        num = <span class="title class_">Math</span>.<span class="title function_">floor</span>(num / <span class="number">10</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> isHappy = <span class="keyword">function</span> (<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> m = <span class="keyword">new</span> ()</span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(m.<span class="title function_">has</span>(n))<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        <span class="keyword">if</span>(n===<span class="number">1</span>)<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        m.<span class="title function_">set</span>(n,<span class="number">1</span>)</span><br><span class="line">        n=<span class="title function_">getSum</span>(n)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>解法一：</p>
+<ul>
+<li>当出现了要快速判断一个元素是否在集合里的时候就要考虑哈希法</li>
+<li>根据题意，首先要定义一个函数来算整个数每一位平方和</li>
+<li>然后定义一个map，用has可以判断n是不是在里面，n已经在map中的话那么就是在无限循环。如果n不在里面的话，为map添加一个制定了key:n,value:1的键值对，最后再更新n</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">n</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">boolean</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> getSum = <span class="keyword">function</span> (<span class="params">num</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> sum = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> (num) &#123;</span><br><span class="line">        sum += (num % <span class="number">10</span>) ** <span class="number">2</span></span><br><span class="line">        num = <span class="title class_">Math</span>.<span class="title function_">floor</span>(num / <span class="number">10</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> isHappy = <span class="keyword">function</span> (<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> set=<span class="keyword">new</span> <span class="title class_">Set</span>()</span><br><span class="line">    <span class="keyword">while</span>(n!==<span class="number">1</span>&amp;&amp;!set.<span class="title function_">has</span>(n))&#123;</span><br><span class="line">        set.<span class="title function_">add</span>(n)</span><br><span class="line">        n=<span class="title function_">getSum</span>(n)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> n===<span class="number">1</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>解法二：</p>
+<ul>
+<li>用set可以保证不会有重复的元素</li>
+<li>如果在循环中某个值重复出现，说明此时陷入死循环，也就说明这个值不是快乐数</li>
+</ul>
+</li>
+</ul>
+<h1 id="Day-11-Leetcode-454-四数相加"><a href="#Day-11-Leetcode-454-四数相加" class="headerlink" title="Day 11 Leetcode 454 四数相加"></a>Day 11 Leetcode 454 四数相加</h1><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/4sum-ii/">题目</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums1</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums2</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums3</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums4</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> fourSumCount = <span class="keyword">function</span>(<span class="params">nums1, nums2, nums3, nums4</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> count=<span class="number">0</span>,sum=<span class="number">0</span></span><br><span class="line">    <span class="keyword">const</span> sumMap= <span class="keyword">new</span> <span class="title class_">Map</span>()</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> n1 <span class="keyword">of</span> nums1)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> n2 <span class="keyword">of</span> nums2)&#123;</span><br><span class="line">            sum=n1+n2</span><br><span class="line">            <span class="keyword">let</span> num=sumMap.<span class="title function_">get</span>(sum)||<span class="number">0</span></span><br><span class="line">            sumMap.<span class="title function_">set</span>(sum,num+<span class="number">1</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> n3 <span class="keyword">of</span> nums3)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> n4 <span class="keyword">of</span> nums4)&#123;</span><br><span class="line">            sum=n3+n4</span><br><span class="line">            count+=(sumMap.<span class="title function_">get</span>(<span class="number">0</span>-sum)||<span class="number">0</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>解法：</p>
+<ul>
+<li>用一个map来存储两个数组元素相加和的值和出现次数</li>
+<li>首先遍历nums1、nums2，把所有元素相加，放入map里，统计出现的次数</li>
+<li>然后遍历nums3、nums4，和为sum，在map中找到key为0-sum的元素，出现的次数value即为所要求值。</li>
+<li>两个两个遍历是为了减少时间复杂度。</li>
+</ul>
+</li>
+</ul>
+<h1 id="Day-12-Leetcode-15-三数之和"><a href="#Day-12-Leetcode-15-三数之和" class="headerlink" title="Day 12 Leetcode 15 三数之和"></a>Day 12 Leetcode 15 三数之和</h1><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/3sum/">题目</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number[][]</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> threeSum = <span class="keyword">function</span> (<span class="params">nums</span>) &#123;</span><br><span class="line">    nums.<span class="title function_">sort</span>(<span class="function">(<span class="params">a, b</span>) =&gt;</span> &#123; <span class="keyword">return</span> a - b &#125;)</span><br><span class="line">    <span class="keyword">const</span> len = nums.<span class="property">length</span>, res = []</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (nums[i] &gt; <span class="number">0</span>) <span class="keyword">return</span> res</span><br><span class="line">        <span class="keyword">if</span> (i&gt;<span class="number">0</span> &amp;&amp; nums[i] === nums[i - <span class="number">1</span>]) <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">let</span> left = i + <span class="number">1</span>, right = len - <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">            <span class="keyword">let</span> sum = nums[i] + nums[left] + nums[right]</span><br><span class="line">            <span class="keyword">if</span> (sum &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                right--</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (sum &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                left++</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                res.<span class="title function_">push</span>([nums[i], nums[left], nums[right]])</span><br><span class="line">                <span class="keyword">while</span> (right &gt; left &amp;&amp; nums[left] === nums[left + <span class="number">1</span>]) &#123;</span><br><span class="line">                    left++</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">while</span> (right &gt; left &amp;&amp; nums[right] === nums[right - <span class="number">1</span>]) &#123;</span><br><span class="line">                    right--</span><br><span class="line">                &#125;</span><br><span class="line">                left++</span><br><span class="line">                right--</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>解法一：双指针法</p>
+<ul>
+<li>这道题不太适合用哈希法来做，因为需要去重</li>
+<li>首先将数组排序，然后开始遍历数组</li>
+<li>注意点一：如果nums[i]已经大于0的话，说明后面不会有合适的元素了，因此直接返回res</li>
+<li>去重一：如果nums[i]&#x3D;&#x3D;&#x3D;nums[i-1]就代表之前出现过这个元素，因此不管这个组合直接continue</li>
+<li>注意点二：这里不用nums[i+1]的原因是因为会影响到left的取值</li>
+<li>之后开始算三数之和，如果三数之和大于0说明数字大了，那么移动right–，如果小于0说明数字笑了，那么移动left++。如果刚好等于0，说明是符合条件的三元组，那么就将三个数放到数组里</li>
+<li>去重二：如果nums[left&#x2F;right]&#x3D;&#x3D;&#x3D;nums[left+1&#x2F;right+1]那么说明left&#x2F;right要重复了，就移动对应的指针</li>
+<li>正常情况还要移动一下指针</li>
+</ul>
+</li>
+</ul>
+<h1 id="Day-12-Leetcode-18-四数之和"><a href="#Day-12-Leetcode-18-四数之和" class="headerlink" title="Day 12 Leetcode 18 四数之和"></a>Day 12 Leetcode 18 四数之和</h1><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/4sum/">题目</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">target</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number[][]</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> fourSum = <span class="keyword">function</span> (<span class="params">nums, target</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> len = nums.<span class="property">length</span></span><br><span class="line">    <span class="keyword">if</span> (len &lt; <span class="number">4</span>) <span class="keyword">return</span> []</span><br><span class="line">    nums.<span class="title function_">sort</span>(<span class="function">(<span class="params">a, b</span>) =&gt;</span> a - b)</span><br><span class="line">    <span class="keyword">let</span> res = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; len - <span class="number">3</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (nums[i] &gt; target &amp;&amp; nums[i] &gt; <span class="number">0</span> &amp;&amp; target &gt; <span class="number">0</span>) <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> (i &gt; <span class="number">0</span> &amp;&amp; nums[i] === nums[i - <span class="number">1</span>]) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = i + <span class="number">1</span>; j &lt; len - <span class="number">2</span>; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[j] + nums[i] &gt; target &amp;&amp; nums[i] &gt; <span class="number">0</span> ) <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">if</span> (j &gt; i + <span class="number">1</span> &amp;&amp; nums[j] === nums[j - <span class="number">1</span>]) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">let</span> l = j + <span class="number">1</span>, r = len - <span class="number">1</span></span><br><span class="line">            <span class="keyword">while</span> (l &lt; r) &#123;</span><br><span class="line">                <span class="keyword">let</span> sum = nums[i] + nums[j] + nums[l] + nums[r]</span><br><span class="line">                <span class="keyword">if</span> (sum &lt; target) &#123; l++ &#125;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (sum &gt; target) &#123; r-- &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    res.<span class="title function_">push</span>([nums[i], nums[j], nums[l], nums[r]]);</span><br><span class="line">                    <span class="keyword">while</span> (l &lt; r &amp;&amp; nums[l] === nums[++l]);</span><br><span class="line">                    <span class="keyword">while</span> (l &lt; r &amp;&amp; nums[r] === nums[--r]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>解法：</p>
+<ul>
+<li>这道题和三数之和的方法类似，但要注意去重的地方有些不同</li>
+<li>在第一个循环的时候要进行第一次剪枝</li>
+<li>第一次剪枝要判断nums[i]是不是大于0，因为负数相加可以变小</li>
+<li>第二次循环的时候要进行第二次剪枝</li>
+<li>第二次剪枝吧nums[i]和nums[j]当做一个整体来判断</li>
+<li>注意：这里和三数之和不同的地方在于：target可以是负数，这样的话进行驱虫的时候</li>
+</ul>
+</li>
+</ul>
+<h1 id="Day-12-Leetcode-383-赎金信"><a href="#Day-12-Leetcode-383-赎金信" class="headerlink" title="Day 12 Leetcode 383 赎金信"></a>Day 12 Leetcode 383 赎金信</h1><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/ransom-note/">题目</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">string</span>&#125; <span class="variable">ransomNote</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">string</span>&#125; <span class="variable">magazine</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">boolean</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> canConstruct = <span class="keyword">function</span> (<span class="params">ransomNote, magazine</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> hashArr=<span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">26</span>).<span class="title function_">fill</span>(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">const</span> a=<span class="string">&quot;a&quot;</span>.<span class="title function_">charCodeAt</span>()</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">const</span> i <span class="keyword">of</span> magazine)&#123;</span><br><span class="line">        hashArr[i.<span class="title function_">charCodeAt</span>()-a]++</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">const</span> i <span class="keyword">of</span> ransomNote)&#123;</span><br><span class="line">        <span class="keyword">const</span> index=i.<span class="title function_">charCodeAt</span>()-a</span><br><span class="line">        <span class="keyword">if</span>(!hashArr[index])<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        hashArr[index]--</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>解法：</p>
+<ul>
+<li>这道题直接用哈希法</li>
+<li>用一个数组存储26个字母</li>
+<li>然后遍历magazine字符串，把出现的数字次数记下来</li>
+<li>然后遍历ransomNote字符串，记录对应的字母的ascii值，然后看hashArr里有没有，没有的话说明ransomNote有magazine里面没有的字母，直接返回false；有的话把数组的对应位置减一</li>
+</ul>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://www.coderlx.cn">Lx</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.coderlx.cn/2023/01/14/2023.01.13%E5%93%88%E5%B8%8C%E8%A1%A8/">http://www.coderlx.cn/2023/01/14/2023.01.13%E5%93%88%E5%B8%8C%E8%A1%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.coderlx.cn" target="_blank">LX's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%AE%97%E6%B3%95/">算法</a><a class="post-meta__tags" href="/tags/%E4%BB%A3%E7%A0%81/">代码</a><a class="post-meta__tags" href="/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/">哈希表</a></div><div class="post_share"><div class="addthis_inline_share_toolbox"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-63bff759ac3c2c92" async="async"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/01/14/2023.01.13%E9%93%BE%E8%A1%A8/"><img class="prev-cover" src="https://bu.dusays.com/2022/05/29/62939662553c9.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">链表</div></div></a></div><div class="next-post pull-right"><a href="/2023/01/14/2023.01.13%E5%AD%97%E7%AC%A6%E4%B8%B2/"><img class="next-cover" src="https://bu.dusays.com/2022/05/26/628fa0426213d.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">字符串</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/01/14/2023.01.13%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="字符串"><img class="cover" src="https://bu.dusays.com/2022/05/26/628fa0426213d.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-14</div><div class="title">字符串</div></div></a></div><div><a href="/2022/12/19/2023.01.13%E6%95%B0%E7%BB%84/" title="数组"><img class="cover" src="https://bu.dusays.com/2022/05/29/62939662553c9.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-19</div><div class="title">数组</div></div></a></div><div><a href="/2023/01/14/2023.01.13%E9%93%BE%E8%A1%A8/" title="链表"><img class="cover" src="https://bu.dusays.com/2022/05/29/62939662553c9.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-14</div><div class="title">链表</div></div></a></div><div><a href="/2023/01/14/2023.01.13%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/" title="栈与队列"><img class="cover" src="https://bu.dusays.com/2022/05/26/628fa0426213d.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-14</div><div class="title">栈与队列</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/index.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Lx</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxqwq"><i></i><span>🛴前往我的github...</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xxqwq" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:2524447983@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><center>主域名：<br><a href="https://www.coderlx.cn"><b><font color="#5ea6e5">coderlx.cn</font></b></a>&nbsp; </center></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-9-Leetcode-242-%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D"><span class="toc-number">1.</span> <span class="toc-text">Day 9 Leetcode 242 有效的字母异位词</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Day-10-Leetcode-349-%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E7%9A%84%E4%BA%A4%E9%9B%86"><span class="toc-number">1.1.</span> <span class="toc-text">Day 10 Leetcode 349 两个数组的交集</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-10-Leetcode-202-%E5%BF%AB%E4%B9%90%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text">Day 10 Leetcode  202 快乐数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-11-Leetcode-454-%E5%9B%9B%E6%95%B0%E7%9B%B8%E5%8A%A0"><span class="toc-number">3.</span> <span class="toc-text">Day 11 Leetcode 454 四数相加</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-12-Leetcode-15-%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C"><span class="toc-number">4.</span> <span class="toc-text">Day 12 Leetcode 15 三数之和</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-12-Leetcode-18-%E5%9B%9B%E6%95%B0%E4%B9%8B%E5%92%8C"><span class="toc-number">5.</span> <span class="toc-text">Day 12 Leetcode 18 四数之和</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-12-Leetcode-383-%E8%B5%8E%E9%87%91%E4%BF%A1"><span class="toc-number">6.</span> <span class="toc-text">Day 12 Leetcode 383 赎金信</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/01/14/2023.01.13%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/" title="栈与队列"><img src="https://bu.dusays.com/2022/05/26/628fa0426213d.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="栈与队列"/></a><div class="content"><a class="title" href="/2023/01/14/2023.01.13%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/" title="栈与队列">栈与队列</a><time datetime="2023-01-14T11:38:00.000Z" title="发表于 2023-01-14 19:38:00">2023-01-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/14/2023.01.13%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="字符串"><img src="https://bu.dusays.com/2022/05/26/628fa0426213d.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="字符串"/></a><div class="content"><a class="title" href="/2023/01/14/2023.01.13%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="字符串">字符串</a><time datetime="2023-01-14T11:37:00.000Z" title="发表于 2023-01-14 19:37:00">2023-01-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/14/2023.01.13%E5%93%88%E5%B8%8C%E8%A1%A8/" title="哈希表"><img src="https://bu.dusays.com/2022/05/29/62939662553c9.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="哈希表"/></a><div class="content"><a class="title" href="/2023/01/14/2023.01.13%E5%93%88%E5%B8%8C%E8%A1%A8/" title="哈希表">哈希表</a><time datetime="2023-01-14T11:36:00.000Z" title="发表于 2023-01-14 19:36:00">2023-01-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Lx</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/algoliasearch-lite.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instantsearch.js/dist/instantsearch.production.min.js"></script><script src="/js/search/algolia.js"></script><div class="js-pjax"></div><script defer src="/js/light.js"></script><script async src="https://npm.elemecdn.com/tzy-blog/lib/js/other/sakura.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script>window.$crisp = [];
+window.CRISP_WEBSITE_ID = "ea1d2e27-23c8-4175-99bb-e012c9e96698";
+(function () {
+  d = document;
+  s = d.createElement("script");
+  s.src = "https://client.crisp.chat/l.js";
+  s.async = 1;
+  d.getElementsByTagName("head")[0].appendChild(s);
+})();
+$crisp.push(["safe", true])
+
+if (true) {
+  $crisp.push(["do", "chat:hide"])
+  $crisp.push(["on", "chat:closed", function() {
+    $crisp.push(["do", "chat:hide"])
+  }])
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      $crisp.push(["do", "chat:show"])
+      $crisp.push(["do", "chat:open"])
+
+    });
+  }
+  chatBtnFn()
+} else {
+  if (false) {
+    function chatBtnHide () {
+      $crisp.push(["do", "chat:hide"])
+    }
+    function chatBtnShow () {
+      $crisp.push(["do", "chat:show"])
+    }
+  }
+}</script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"]):not([href="/music/"]):not([href="/no-pjax/"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    if(parent_div_git) {
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = '/';
+  var qweather_key = '58da29ac87ae4aba8c409c566e707257';
+  var gaud_map_key = '55af2c15427825c15941055e09fc0be1';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '113.34532,23.15624';
+  var clock_default_rectangle_enable = 'false';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v6.2.0" title=""><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v4.3.1" title=""><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://npm.elemecdn.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.js"></script><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2023/01/14/2023.01.13栈与队列/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="https://bu.dusays.com/2022/05/26/628fa0426213d.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-01-14</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2023/01/14/2023.01.13栈与队列/&quot;);" href="javascript:void(0);" alt="">栈与队列</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2023/01/14/2023.01.13栈与队列/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2023/01/14/2023.01.13哈希表/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="https://bu.dusays.com/2022/05/29/62939662553c9.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-01-14</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2023/01/14/2023.01.13哈希表/&quot;);" href="javascript:void(0);" alt="">哈希表</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2023/01/14/2023.01.13哈希表/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2023/01/14/2023.01.13链表/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="https://bu.dusays.com/2022/05/29/62939662553c9.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-01-14</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2023/01/14/2023.01.13链表/&quot;);" href="javascript:void(0);" alt="">链表</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2023/01/14/2023.01.13链表/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2022/12/19/2023.01.13数组/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="https://bu.dusays.com/2022/05/29/62939662553c9.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2022-12-19</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2022/12/19/2023.01.13数组/&quot;);" href="javascript:void(0);" alt="">数组</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2022/12/19/2023.01.13数组/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2023/01/14/2023.01.13字符串/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="https://bu.dusays.com/2022/05/26/628fa0426213d.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-01-14</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2023/01/14/2023.01.13字符串/&quot;);" href="javascript:void(0);" alt="">字符串</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2023/01/14/2023.01.13字符串/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '2');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --></body></html>
